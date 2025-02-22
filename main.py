@@ -1,7 +1,7 @@
 from tkinter import *
 from csv import *
 from random import *
-import time
+from tkinter import messagebox
 
 BACKGROUND_COLOR = "#B1DDC6"
 
@@ -25,10 +25,15 @@ def flip_card():
     window.after(3000,pick_word)
     
 #Reading a csv dictionary and transforming them into a list
-with open("data/french_words.csv", "r") as f:
+try:
+    with open("data/french_words.csv", "r") as f:
         list_of_words = list(reader(f))
+    if not list_of_words:
+        messagebox.showwarning("Empty CSV")
+except FileNotFoundError:
+    messagebox.showwarning("Missing CSV file")
 
-# UI setup
+
 window = Tk()
 window.title("Flash Cards")
 window.geometry("900x800")
